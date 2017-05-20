@@ -81,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK){
                 //User signed in through FB
                 startNotifcationService();
-
-                if (!currentUser.getUid().equals(""))
                 createNewUser();
 
             }else {

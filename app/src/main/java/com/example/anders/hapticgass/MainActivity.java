@@ -7,17 +7,23 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
+
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import java.util.ArrayList;
 
-
+import Adaptors.FriendListAdaptor;
 import model.User;
 
 
@@ -31,14 +37,24 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private FirebaseUser currentUser;
 
+    private ListView friendList;
+    private Button refresh;
+
+    private ArrayList<User> friends;
+    private FriendListAdaptor adaptor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        friendList = (ListView) findViewById(R.id.friendsListView);
+        refresh = (Button) findViewById(R.id.button);
+
         database = FirebaseDatabase.getInstance();
         //Check if logged in
         auth = FirebaseAuth.getInstance();
+
         if(auth.getCurrentUser() != null){
             //user signed in
             currentUser = auth.getCurrentUser();
@@ -50,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
                             .setProviders(AuthUI.FACEBOOK_PROVIDER).build(),
                     LOGIN_RESULT_CODE);
         }
+        friends = new ArrayList<>();
+        getUserList();
     }
 
     //Create menu bar to Log out
@@ -117,8 +135,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    public void getUserList() {
+        reference = database.getReference("userlist");
+        reference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                User user = dataSnapshot.getValue(User.class);
+                friends.add(user);
+                adaptor = new FriendListAdaptor(MainActivity.this, friends);
+                friendList.setAdapter(adaptor);
+            }
 
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
+            }
 
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 }

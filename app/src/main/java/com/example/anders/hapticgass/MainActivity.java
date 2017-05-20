@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         if(auth.getCurrentUser() != null){
             //user signed in
-            writeUser();
+            startNotifcationService();
         }
         else {
             startActivityForResult(AuthUI.getInstance()
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == LOGIN_RESULT_CODE){
             if (resultCode == RESULT_OK){
                 //User logged in
-                writeUser();
+                startNotifcationService();
             }else {
                 //Login failed
                 Log.d(TAG, "Login failed");
@@ -73,9 +73,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void writeUser(){
-        Toast.makeText(this, auth.getCurrentUser().getEmail() + " " +
-                auth.getCurrentUser().getDisplayName(), Toast.LENGTH_LONG).show();
+    //Start listening for notifications in background service
+    public void startNotifcationService(){
+        Intent intent = new Intent(this, NotificationService.class);
+        startService(intent);
 
     }
 

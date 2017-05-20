@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         if(auth.getCurrentUser() != null){
             //user signed in
             currentUser = auth.getCurrentUser();
-            startNotifcationService();
+            startNotificationService();
         }
         else {
             startActivityForResult(AuthUI.getInstance()
@@ -80,9 +80,10 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == LOGIN_RESULT_CODE){
             if (resultCode == RESULT_OK){
                 //User signed in through FB
-                startNotifcationService();
-                createNewUser();
+                currentUser = auth.getCurrentUser();
 
+                createNewUser();
+                startNotificationService();
             }else {
                 //Login failed
                 Log.d(TAG, "Login failed");
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Start listening for notifications in background service
-    public void startNotifcationService(){
+    public void startNotificationService(){
         Intent intent = new Intent(this, NotificationService.class);
         startService(intent);
 

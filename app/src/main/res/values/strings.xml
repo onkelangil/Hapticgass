@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Hapticgass</string>
+    <string name="app_name">Haptic Gas</string>
+    <string name="facebook_application_id" translatable="false">257583218049087</string>
 </resources>

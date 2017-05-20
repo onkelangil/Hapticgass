@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "175024567680-log4np06rh0ekchl7s34trtdn8b4284h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.anders.hapticgass",
+            "certificate_hash": "07d6954b640512b12a104874aa4f3d5d5ad9749e"
+          }
+        },
+        {
           "client_id": "175024567680-e4uaggku2dqu58rhhpuf3pbmjl5nr8np.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "175024567680-e4uaggku2dqu58rhhpuf3pbmjl5nr8np.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 currentUser = auth.getCurrentUser();
 
                 createNewUser();
+
                 startNotificationService();
             }else {
                 //Login failed

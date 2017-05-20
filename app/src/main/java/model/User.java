@@ -1,6 +1,5 @@
 package model;
 
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 /**
@@ -9,18 +8,13 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class User {
 
-    public String username;
-    public String email;
-
-
     public User() {
 
     }
 
     public User(String userName, String email) {
-        username = userName;
-        this.email = email;
+        String username = userName;
+        String email1 = email;
 
     }
-
 }

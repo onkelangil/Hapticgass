@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void createNewUser() {
-        reference = database.getReference("UserList");
+        reference = database.getReference("userlist");
 
         //Checks if user does not exist in the database
         reference.child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {

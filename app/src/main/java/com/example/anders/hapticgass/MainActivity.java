@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         else {
             startActivityForResult(AuthUI.getInstance()
                             .createSignInIntentBuilder()
-                            .setProviders(AuthUI.FACEBOOK_PROVIDER).build()
-                    , LOGIN_RESULT_CODE);
+                            .setProviders(AuthUI.FACEBOOK_PROVIDER).build(),
+                    LOGIN_RESULT_CODE);
         }
     }
     @Override
@@ -47,21 +47,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Login failed");
             }
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-       // mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        /*
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }*/
     }
 
     public void writeUser(){

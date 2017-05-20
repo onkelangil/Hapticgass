@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "175024567680",
+    "firebase_url": "https://hapticgas.firebaseio.com",
+    "project_id": "hapticgas",
+    "storage_bucket": "hapticgas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175024567680:android:34d5637b4fd72a38",
+        "android_client_info": {
+          "package_name": "com.example.anders.hapticgass"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "175024567680-e4uaggku2dqu58rhhpuf3pbmjl5nr8np.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHKU3BfbvP95yPkGPEX6W9Bwd-oVH0NwE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

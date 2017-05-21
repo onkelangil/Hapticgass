@@ -6,17 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.anders.hapticgass.R;
-
 import java.util.ArrayList;
-import java.util.List;
-
 import model.User;
 
 /**
  * Created by Anders on 20-05-2017.
+ * This class is inspired by Kasper's demo on adaptors
  */
 
 public class FriendListAdaptor extends BaseAdapter {
@@ -35,6 +31,7 @@ public class FriendListAdaptor extends BaseAdapter {
 
     @Override
     public int getCount() {
+
         if (friendList  == null) {
             return 0;
         }
@@ -61,7 +58,6 @@ public class FriendListAdaptor extends BaseAdapter {
             inflater = LayoutInflater.from(context);
             view = inflater.inflate(R.layout.friend_list_item, null);
         }
-        Toast.makeText(context, "" + friendList.size(), Toast.LENGTH_SHORT).show();
 
         if(friendList != null && friendList.size() > i) {
             u = friendList.get(i);

@@ -135,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    //Get the list of users and add them to you friend view
     public void getUserList() {
         reference = database.getReference("userlist");
         reference.addChildEventListener(new ChildEventListener() {

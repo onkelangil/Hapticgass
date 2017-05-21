@@ -66,6 +66,7 @@ public class FartListAdaptor extends BaseAdapter {
         return 0;
     }
 
+    //Updates listview on main activity
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null) {
@@ -84,6 +85,7 @@ public class FartListAdaptor extends BaseAdapter {
 
             }
         });
+
         //gets the fart list and
         if(fartList != null && fartList.size() > i) {
             f = fartList.get(i);
@@ -101,16 +103,22 @@ public class FartListAdaptor extends BaseAdapter {
 
                 }
             });
+            //Sets colors on the views
             if (f.seen){
                 view.setBackgroundColor(0xffe4e4e4);
             }else view.setBackgroundColor(0xff6eebac);
 
-            final ImageButton play = (ImageButton) view.findViewById(R.id.imageButton);
+            //Play button
+            ImageButton play = (ImageButton) view.findViewById(R.id.imageButton);
             play.setOnClickListener(new View.OnClickListener() {
+                final Fart fart = f;
                 @Override
                 public void onClick(View view) {
-                    //Toast.makeText(, "ID: " + view.getId(), Toast.LENGTH_SHORT).show();
-                    Log.d("addaptor", "onClick: " + play.getId());
+
+                    if (!fart.seen){
+                        Log.i(TAG, "onClick: " + reference.child(f.receiver));
+                        //reference.child(f.receiver);
+                    }
 
                 }
             });

@@ -2,8 +2,11 @@ package com.example.anders.hapticgass;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,6 +48,30 @@ public class SendActivity extends AppCompatActivity {
 
         friends = new ArrayList<>();
         getUserList();
+
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Send fart for each recipient
+                sendFart(auth.getCurrentUser().getUid() + "", "mUiOdqidaocaMTLRSSA6dGdfdwI3");
+
+                //Ends activity
+                finish();
+            }
+        });
+    }
+
+    //Send a fart to the relevant friends
+    private void sendFart(String sID, String rID) {
+        DatabaseReference referenceFart = database.getReference("farts");
+
+        //Get a unique key for the db
+        String key = referenceFart.push().getKey();
+
+        //Insert sender
+        referenceFart.child(key).child("sender").setValue(sID);
+        referenceFart.child(key).child("receiver").setValue(rID);
+        referenceFart.child(key).child("seen").setValue(false);
     }
 
     public void getUserList() {

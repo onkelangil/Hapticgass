@@ -1,10 +1,12 @@
 package Adaptors;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -23,14 +25,12 @@ public class FriendListAdaptor extends BaseAdapter {
 
     private ArrayList<User> friendList;
     private Context context;
-    private boolean isPlayed = true;
     private User u;
 
     public FriendListAdaptor(Context context, ArrayList<User> friendList){
 
         this.context = context;
         this.friendList = friendList;
-
     }
 
     @Override
@@ -68,6 +68,17 @@ public class FriendListAdaptor extends BaseAdapter {
 
             TextView username = (TextView) view.findViewById(R.id.userNameTV);
             username.setText(u.username);
+
+            CheckBox check = (CheckBox) view.findViewById(R.id.checkBox);
+
+            check.setOnClickListener(new View.OnClickListener() {
+                final User user = u;
+                @Override
+                public void onClick(View v) {
+
+                    Log.i("Adaptor", "" + user.username);
+                }
+            });
 
             return view;
         }

@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -100,6 +101,12 @@ public class NotificationService extends Service {
         });
 
         return START_STICKY;
+    }
+
+    public void onDestroy(){
+        notificationManager.cancelAll();
+        Toast.makeText(this, "Service Destroyed", Toast.LENGTH_SHORT).show();
+        super.onDestroy();
     }
 
     @Nullable

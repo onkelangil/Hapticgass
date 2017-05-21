@@ -134,9 +134,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.exists()){
-                    User newUser = new User(currentUser.getDisplayName(),
-                            currentUser.getEmail());
-                    reference.child(auth.getCurrentUser().getUid()).setValue(newUser);
+                    String uid = auth.getCurrentUser().getUid();
+
+                    reference.child(uid).child("username").setValue(currentUser.getDisplayName());
+                    reference.child(uid).child("email").setValue(currentUser.getEmail());
                 }
             }
 

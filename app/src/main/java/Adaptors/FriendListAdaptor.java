@@ -87,7 +87,7 @@ public class FriendListAdaptor extends BaseAdapter {
                     } else {
                         checkedUsers.remove(user);
                     }
-                    Log.i("Adaptor", "" + user.username);
+                    Log.i("Adaptor", "" + user.uid);
                 }
             });
 

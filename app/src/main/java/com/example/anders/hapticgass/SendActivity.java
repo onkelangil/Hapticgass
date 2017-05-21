@@ -2,6 +2,7 @@ package com.example.anders.hapticgass;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -60,9 +61,8 @@ public class SendActivity extends AppCompatActivity {
                 }
 
                 for (int i = 0; i < sendTo.size(); i++) {
-                    String email = sendTo.get(i).email;
 
-                    sendFart(auth.getCurrentUser().getUid() + "", "");
+                    sendFart(auth.getCurrentUser().getUid() + "", sendTo.get(i).uid);
                 }
 
                 //Ends activity
@@ -89,6 +89,10 @@ public class SendActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 User user = dataSnapshot.getValue(User.class);
+
+                DatabaseReference ref = dataSnapshot.getRef();
+
+                user.uid = ref.getKey();
                 friends.add(user);
                 adaptor = new FriendListAdaptor(SendActivity.this, friends);
                 friendList.setAdapter(adaptor);
@@ -115,8 +119,4 @@ public class SendActivity extends AppCompatActivity {
             }
         });
     }
-
-    /*public String getUIDfromEmail(String email) {
-        reference.get
-    }*/
 }

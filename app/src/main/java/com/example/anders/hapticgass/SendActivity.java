@@ -25,7 +25,6 @@ public class SendActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseDatabase database;
     private DatabaseReference reference;
-    private FirebaseUser currentUser;
 
     private ListView friendList;
     private Button btnSend;
@@ -45,6 +44,7 @@ public class SendActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         //Check if logged in
         auth = FirebaseAuth.getInstance();
+        reference = database.getReference("userlist");
 
         friends = new ArrayList<>();
         getUserList();
@@ -52,8 +52,18 @@ public class SendActivity extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Send fart for each recipient
-                sendFart(auth.getCurrentUser().getUid() + "", "mUiOdqidaocaMTLRSSA6dGdfdwI3");
+
+                ArrayList<User> sendTo = new ArrayList<>();
+
+                if(adaptor != null) {
+                    sendTo = adaptor.getCheckedFriends();
+                }
+
+                for (int i = 0; i < sendTo.size(); i++) {
+                    String email = sendTo.get(i).email;
+
+                    sendFart(auth.getCurrentUser().getUid() + "", "");
+                }
 
                 //Ends activity
                 finish();
@@ -75,7 +85,6 @@ public class SendActivity extends AppCompatActivity {
     }
 
     public void getUserList() {
-        reference = database.getReference("userlist");
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -106,4 +115,8 @@ public class SendActivity extends AppCompatActivity {
             }
         });
     }
+
+    /*public String getUIDfromEmail(String email) {
+        reference.get
+    }*/
 }

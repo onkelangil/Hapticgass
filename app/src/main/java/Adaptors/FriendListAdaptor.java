@@ -25,12 +25,18 @@ public class FriendListAdaptor extends BaseAdapter {
 
     private ArrayList<User> friendList;
     private Context context;
+
+    private CheckBox check;
+    private TextView username;
+
     private User u;
+    private ArrayList<User> checkedUsers;
 
     public FriendListAdaptor(Context context, ArrayList<User> friendList){
 
         this.context = context;
         this.friendList = friendList;
+        checkedUsers = new ArrayList<>();
     }
 
     @Override
@@ -66,16 +72,21 @@ public class FriendListAdaptor extends BaseAdapter {
         if(friendList != null && friendList.size() > i) {
             u = friendList.get(i);
 
-            TextView username = (TextView) view.findViewById(R.id.userNameTV);
+            username = (TextView) view.findViewById(R.id.userNameTV);
             username.setText(u.username);
 
-            CheckBox check = (CheckBox) view.findViewById(R.id.checkBox);
+            check = (CheckBox) view.findViewById(R.id.checkBox);
 
             check.setOnClickListener(new View.OnClickListener() {
                 final User user = u;
+                final CheckBox pCheck = check;
                 @Override
                 public void onClick(View v) {
-
+                    if (pCheck.isChecked()) {
+                        checkedUsers.add(user);
+                    } else {
+                        checkedUsers.remove(user);
+                    }
                     Log.i("Adaptor", "" + user.username);
                 }
             });
@@ -83,5 +94,10 @@ public class FriendListAdaptor extends BaseAdapter {
             return view;
         }
         return null;
+    }
+
+    public ArrayList<User> getCheckedFriends() {
+        Log.d("Adaptor", checkedUsers.toString());
+        return checkedUsers;
     }
 }

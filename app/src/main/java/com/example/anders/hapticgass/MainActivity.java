@@ -172,9 +172,12 @@ public class MainActivity extends AppCompatActivity {
                 fart.receiver = dataSnapshot.child("receiver").getValue() + "";
                 fart.sender = dataSnapshot.child("sender").getValue() + "";
 
+                Log.d(TAG, fart.id + " - " + fart.receiver + " - " + fart.sender);
+
                 for (int i = 0; i < farts.size(); i++){
                     if (s.equals(farts.get(i).id)){
-                        farts.set(i, fart);
+                        farts.remove(i);
+                        farts.add(fart);
                     }
                 }
                 adaptor = new FartListAdaptor(MainActivity.this, farts);

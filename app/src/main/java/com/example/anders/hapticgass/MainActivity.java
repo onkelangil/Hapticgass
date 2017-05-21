@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import Adaptors.FartListAdaptor;
+import model.Fart;
 import model.User;
 
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView friendList;
     private Button btnSend;
 
-    private ArrayList<User> friends;
+    private ArrayList<Fart> farts;
     private FartListAdaptor adaptor;
 
     @Override
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                             .setProviders(AuthUI.FACEBOOK_PROVIDER).build(),
                     LOGIN_RESULT_CODE);
         }
-        friends = new ArrayList<>();
+        farts = new ArrayList<>();
         getUserList();
     }
 
@@ -148,13 +149,13 @@ public class MainActivity extends AppCompatActivity {
 
     //Get the list of users and add them to you friend view
     public void getUserList() {
-        reference = database.getReference("userlist");
+        reference = database.getReference("farts");
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                User user = dataSnapshot.getValue(User.class);
-                friends.add(user);
-                adaptor = new FartListAdaptor(MainActivity.this, friends);
+                Fart fart = dataSnapshot.getValue(Fart.class);
+                farts.add(fart);
+                adaptor = new FartListAdaptor(MainActivity.this, farts);
                 friendList.setAdapter(adaptor);
             }
 

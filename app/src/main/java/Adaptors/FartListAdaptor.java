@@ -17,6 +17,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import model.Fart;
 import model.User;
@@ -72,6 +74,16 @@ public class FartListAdaptor extends BaseAdapter {
             view = inflater.inflate(R.layout.fart_list_item, null);
         }
 
+        //sort the fartslist so seen farts are in bottom
+        Collections.sort(fartList, new Comparator<Fart>() {
+            @Override
+            public int compare(Fart f1, Fart f2) {
+                boolean b1 = f1.seen;
+                boolean b2 = f2.seen;
+                return Boolean.compare(b1,b2);
+
+            }
+        });
         //gets the fart list and
         if(fartList != null && fartList.size() > i) {
             f = fartList.get(i);
@@ -90,23 +102,16 @@ public class FartListAdaptor extends BaseAdapter {
                 }
             });
             if (f.seen){
-                //username.setBackgroundColor();
-            }
+                view.setBackgroundColor(0xffe4e4e4);
+            }else view.setBackgroundColor(0xff6eebac);
+
             final ImageButton play = (ImageButton) view.findViewById(R.id.imageButton);
             play.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //Toast.makeText(, "ID: " + view.getId(), Toast.LENGTH_SHORT).show();
                     Log.d("addaptor", "onClick: " + play.getId());
-                    /*
-                    if (isPlayed){
 
-                        play.setImageResource(android.R.drawable.ic_media_pause);
-                        isPlayed = false;
-                    }else{
-                        play.setImageResource(android.R.drawable.ic_media_play);
-                        isPlayed = true;
-                    }*/
                 }
             });
 

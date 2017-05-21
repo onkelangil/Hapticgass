@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         friendList = (ListView) findViewById(R.id.friendsListView);
-        btnSend = (Button) findViewById(R.id.button);
+        btnSend = (Button) findViewById(R.id.btnSend);
 
         //Set button click listener for starting SendActivity
         btnSend.setOnClickListener(new View.OnClickListener() {

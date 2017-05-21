@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import com.example.anders.hapticgass.R;
 import java.util.ArrayList;
+
 import model.User;
 
 /**
@@ -15,14 +17,14 @@ import model.User;
  * This class is inspired by Kasper's demo on adaptors
  */
 
-public class FriendListAdaptor extends BaseAdapter {
+public class FartListAdaptor extends BaseAdapter {
 
     private ArrayList<User> friendList;
     private Context context;
-
+    private boolean isPlayed = true;
     private User u;
 
-    public FriendListAdaptor(Context context, ArrayList<User> friendList){
+    public FartListAdaptor(Context context, ArrayList<User> friendList){
 
         this.context = context;
         this.friendList = friendList;
@@ -56,7 +58,7 @@ public class FriendListAdaptor extends BaseAdapter {
         if (view == null) {
             LayoutInflater inflater;
             inflater = LayoutInflater.from(context);
-            view = inflater.inflate(R.layout.friend_list_item, null);
+            view = inflater.inflate(R.layout.fart_list_item, null);
         }
 
         if(friendList != null && friendList.size() > i) {
@@ -64,8 +66,19 @@ public class FriendListAdaptor extends BaseAdapter {
 
             TextView username = (TextView) view.findViewById(R.id.userNameTV);
             username.setText(u.username);
-            TextView email = (TextView) view.findViewById(R.id.emailTV);
-            email.setText(u.email);
+            final ImageButton play = (ImageButton) view.findViewById(R.id.imageButton);
+            play.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (isPlayed){
+                        play.setImageResource(android.R.drawable.ic_media_pause);
+                        isPlayed = false;
+                    }else{
+                        play.setImageResource(android.R.drawable.ic_media_play);
+                        isPlayed = true;
+                    }
+                }
+            });
 
             return view;
         }

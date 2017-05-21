@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
-import Adaptors.FriendListAdaptor;
+import Adaptors.FartListAdaptor;
 import model.User;
 
 
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnSend;
 
     private ArrayList<User> friends;
-    private FriendListAdaptor adaptor;
+    private FartListAdaptor adaptor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 User user = dataSnapshot.getValue(User.class);
                 friends.add(user);
-                adaptor = new FriendListAdaptor(MainActivity.this, friends);
+                adaptor = new FartListAdaptor(MainActivity.this, friends);
                 friendList.setAdapter(adaptor);
             }
 

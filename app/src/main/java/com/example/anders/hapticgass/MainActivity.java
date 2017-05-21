@@ -30,7 +30,8 @@ import model.User;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private static final int LOGIN_RESULT_CODE = 1337;
+    private static final int LOGIN_RESULT_CODE = 1001;
+    private static final int SEND_RESULT_CODE = 1002;
 
     private FirebaseAuth auth;
     private FirebaseDatabase database;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
 
     private ListView friendList;
-    private Button refresh;
+    private Button btnSend;
 
     private ArrayList<User> friends;
     private FriendListAdaptor adaptor;
@@ -49,7 +50,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         friendList = (ListView) findViewById(R.id.friendsListView);
-        refresh = (Button) findViewById(R.id.button);
+        btnSend = (Button) findViewById(R.id.button);
+
+        //Set button click listener for starting SendActivity
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Start new explicit activity
+                Intent intentSend = new Intent(MainActivity.this, SendActivity.class);
+                startActivityForResult(intentSend, SEND_RESULT_CODE);
+            }
+        });
 
         database = FirebaseDatabase.getInstance();
         //Check if logged in

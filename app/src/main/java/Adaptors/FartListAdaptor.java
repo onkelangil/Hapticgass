@@ -9,19 +9,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import com.example.anders.hapticgass.R;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
 import model.Fart;
-import model.User;
 
 /**
  * Created by Anders on 20-05-2017.
@@ -34,7 +30,9 @@ public class FartListAdaptor extends BaseAdapter {
     private Context context;
     private Fart f;
     private DatabaseReference reference;
+
     private String senderUsername;
+
     private final static String TAG = "adaptor class";
 
     public FartListAdaptor(Context context, ArrayList<Fart> fartList){
@@ -68,11 +66,11 @@ public class FartListAdaptor extends BaseAdapter {
 
     //Updates listview on main activity
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        if (view == null) {
+    public View getView(int i, View listview, ViewGroup viewGroup) {
+        if (listview == null) {
             LayoutInflater inflater;
             inflater = LayoutInflater.from(context);
-            view = inflater.inflate(R.layout.fart_list_item, null);
+            listview = inflater.inflate(R.layout.fart_list_item, null);
         }
 
         //sort the fartslist so seen farts are in bottom
@@ -89,7 +87,7 @@ public class FartListAdaptor extends BaseAdapter {
         //gets the fart list and
         if(fartList != null && fartList.size() > i) {
             f = fartList.get(i);
-            final TextView username = (TextView) view.findViewById(R.id.userNameTV);
+            final TextView username = (TextView) listview.findViewById(R.id.userNameTV);
 
             //Put the sender name on the list view
             reference.child(f.sender).child("username").addValueEventListener(new ValueEventListener() {
@@ -105,25 +103,27 @@ public class FartListAdaptor extends BaseAdapter {
             });
             //Sets colors on the views
             if (f.seen){
-                view.setBackgroundColor(0xffe4e4e4);
-            }else view.setBackgroundColor(0xff6eebac);
+                listview.setBackgroundColor(0xffe4e4e4);
+            }else listview.setBackgroundColor(0xff6eebac);
 
             //Play button
-            ImageButton play = (ImageButton) view.findViewById(R.id.imageButton);
+            ImageButton play = (ImageButton) listview.findViewById(R.id.imageButton);
+            final View finalListview = listview;
             play.setOnClickListener(new View.OnClickListener() {
                 final Fart fart = f;
                 @Override
                 public void onClick(View view) {
-
+                    DatabaseReference seenFart;
                     if (!fart.seen){
-                        Log.i(TAG, "onClick: " + reference.child(f.receiver));
-                        //reference.child(f.receiver);
+                        seenFart = FirebaseDatabase.getInstance().getReference("farts");
+                        seenFart.child(fart.id).child("seen").setValue(true);
+                        finalListview.setBackgroundColor(0xffe4e4e4);
                     }
 
                 }
             });
 
-            return view;
+            return listview;
         }
         return null;
     }

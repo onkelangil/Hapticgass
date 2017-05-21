@@ -155,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Fart fart = dataSnapshot.getValue(Fart.class);
+                DatabaseReference ref = dataSnapshot.getRef();
+                fart.id = ref.getKey();
                 farts.add(fart);
                 adaptor = new FartListAdaptor(MainActivity.this, farts);
                 friendList.setAdapter(adaptor);
@@ -162,6 +164,21 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                Log.d(TAG, "onChildChanged:  " + s);
+                Fart fart = new Fart();
+                fart.id = s;
+                fart.seen = Boolean.parseBoolean(dataSnapshot.child("seen").getValue() + "");
+                fart.receiver = dataSnapshot.child("receiver").getValue() + "";
+                fart.sender = dataSnapshot.child("sender").getValue() + "";
+
+                for (int i = 0; i < farts.size(); i++){
+                    if (s.equals(farts.get(i).id)){
+                        farts.set(i, fart);
+                    }
+                }
+                adaptor = new FartListAdaptor(MainActivity.this, farts);
+                friendList.setAdapter(adaptor);
 
             }
 

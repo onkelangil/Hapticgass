@@ -122,7 +122,7 @@ public class FartListAdaptor extends BaseAdapter {
                     if (!fart.seen){
                         seenFart = FirebaseDatabase.getInstance().getReference("farts");
                         seenFart.child(fart.id).child("seen").setValue(true);
-                        finalListview.setBackgroundColor(0xffe4e4e4);
+                        finalListview.setBackgroundColor(0xffffffff);
                     }
                 }
             });

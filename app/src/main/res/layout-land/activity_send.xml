@@ -20,7 +20,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/imageView2"
         app:layout_constraintRight_toRightOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.902"
+        app:layout_constraintVertical_bias="0.774"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintHorizontal_bias="0.428" />
@@ -28,7 +28,7 @@
     <ListView
         android:id="@+id/friendSend"
         android:layout_width="340dp"
-        android:layout_height="299dp"
+        android:layout_height="fill_parent"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
@@ -52,8 +52,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
-        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintHorizontal_bias="0.563"
         app:layout_constraintLeft_toRightOf="@+id/friendSend"
         app:layout_constraintBottom_toTopOf="@+id/btnSend"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.779" />
 </android.support.constraint.ConstraintLayout>

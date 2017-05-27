@@ -57,23 +57,26 @@ public class SendActivity extends AppCompatActivity {
         friends = new ArrayList<>();
         getUserList();
 
+        //Send button listener
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 ArrayList<User> sendTo = new ArrayList<>();
 
                 if(adaptor != null) {
                     sendTo = adaptor.getCheckedFriends();
                 }
-
-                for (int i = 0; i < sendTo.size(); i++) {
-
-                    sendFart(auth.getCurrentUser().getUid() + "", sendTo.get(i).uid);
+                if (sendTo.size() > 0) {
+                    //Send to every friend checked off the list
+                    for (int i = 0; i < sendTo.size(); i++) {
+                        sendFart(auth.getCurrentUser().getUid() + "", sendTo.get(i).uid);
+                    }
+                    broadcastResult();
+                    //Ends activity
+                    finish();
+                } else {
+                    Toast.makeText(SendActivity.this, "No friends are checked off", Toast.LENGTH_LONG).show();
                 }
-                broadcastResult();
-                //Ends activity
-                finish();
             }
         });
     }
@@ -137,6 +140,20 @@ public class SendActivity extends AppCompatActivity {
         Intent broadcastIntent = new Intent(BROADCAST_RESULT);
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+
+    }
+
+    //Saves data to onCreate if the process is killed and restarted.
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        //savedInstanceState.putString("name", name);
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    //Restores data from savedInstanceState
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
 
     }
 }

@@ -1,6 +1,8 @@
 package Adaptors;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +40,8 @@ public class FriendListAdaptor extends BaseAdapter {
         this.friendList = friendList;
         checkedUsers = new ArrayList<>();
     }
+
+
 
     @Override
     public int getCount() {

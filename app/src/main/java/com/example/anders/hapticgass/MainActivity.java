@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         //Broadcast Receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(onSendActivityResult, new IntentFilter(BROADCAST_RESULT));
     }
+
     @Override
     protected void onResume(){
         super.onResume();
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         return(super.onOptionsItemSelected(item));
     }
 
+    //Gets result when people sign into our application
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
@@ -138,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
         startService(intent);
 
     }
+
     private void createNewUser() {
         reference = database.getReference("userlist");
 
@@ -148,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!dataSnapshot.exists()){
                     String uid = auth.getCurrentUser().getUid();
 
+                    //The user is put into the database
                     reference.child(uid).child("username").setValue(currentUser.getDisplayName());
                     reference.child(uid).child("email").setValue(currentUser.getEmail());
                 }
@@ -160,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //Get the list of users and add them to you friend view
+    //Retrieves the user list from the database
     public void getUserList() {
         reference = database.getReference("farts");
         reference.addChildEventListener(new ChildEventListener() {
@@ -170,22 +174,27 @@ public class MainActivity extends AppCompatActivity {
                 DatabaseReference ref = dataSnapshot.getRef();
                 fart.id = ref.getKey();
 
-                //add fart to list so only the correct receiver gets the fart
+                //The fart is only added, to the list, if it is the correct receiver of the fart
                 if (currentUser != null) {
                     if (fart.receiver != null) {
+
                         if (fart.receiver.equals(currentUser.getUid())) {
                             farts.add(fart);
+
                         }
                     }else {
-                        //Restarts application
+
+                        //Restarts activity
                         finish();
                         startActivity(getIntent());
                     }
-
                 }
+
                 adaptor = new FartListAdaptor(MainActivity.this, farts);
                 friendList.setAdapter(adaptor);
+
             }
+            //When child is changed the adaptor and UI are updated
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 

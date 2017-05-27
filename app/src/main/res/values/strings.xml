@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Haptic Gas</string>
     <string name="facebook_application_id" translatable="false">257583218049087</string>
-    <string name="logout">Log Out</string>
+    <string name="logout">Log out</string>
     <string name="send">Send fart</string>
-    <string name="record">Record your own fart</string>
+    <string name="record">Record your fart</string>
 </resources>

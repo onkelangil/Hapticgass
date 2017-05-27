@@ -1,5 +1,7 @@
 package com.example.anders.hapticgass;
 
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import Adaptors.FriendListAdaptor;
 import model.User;
@@ -32,6 +36,8 @@ public class SendActivity extends AppCompatActivity {
 
     private ArrayList<User> friends;
     private FriendListAdaptor adaptor;
+
+    private static final String BROADCAST_RESULT = "broadcast_result";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +70,7 @@ public class SendActivity extends AppCompatActivity {
 
                     sendFart(auth.getCurrentUser().getUid() + "", sendTo.get(i).uid);
                 }
-
+                broadcastResult();
                 //Ends activity
                 finish();
             }
@@ -118,5 +124,11 @@ public class SendActivity extends AppCompatActivity {
 
             }
         });
+    }
+    private void broadcastResult(){
+        Intent broadcastIntent = new Intent(BROADCAST_RESULT);
+
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+
     }
 }

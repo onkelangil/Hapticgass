@@ -1,7 +1,11 @@
 package com.example.anders.hapticgass;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +28,6 @@ import java.util.ArrayList;
 
 import Adaptors.FartListAdaptor;
 import model.Fart;
-import model.User;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final int LOGIN_RESULT_CODE = 1001;
     private static final int SEND_RESULT_CODE = 1002;
+    private static final String BROADCAST_RESULT = "broadcast_result";
 
     private FirebaseAuth auth;
     private FirebaseDatabase database;
@@ -79,6 +83,14 @@ public class MainActivity extends AppCompatActivity {
         }
         farts = new ArrayList<>();
         getUserList();
+
+        //Broadcast Receiver
+        LocalBroadcastManager.getInstance(this).registerReceiver(onSendActivityResult, new IntentFilter(BROADCAST_RESULT));
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        createNewUser();
     }
 
     //Create menu bar to Log out
@@ -161,10 +173,10 @@ public class MainActivity extends AppCompatActivity {
                 adaptor = new FartListAdaptor(MainActivity.this, farts);
                 friendList.setAdapter(adaptor);
             }
-
+            //When child is changed the adaptor and UI are updated
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                /*
                 Log.d(TAG, "onChildChanged:  " + s);
                 Fart fart = new Fart();
                 fart.id = s;
@@ -177,8 +189,10 @@ public class MainActivity extends AppCompatActivity {
                         farts.set(i, fart);
                     }
                 }
+                farts.add(fart);
                 adaptor = new FartListAdaptor(MainActivity.this, farts);
                 friendList.setAdapter(adaptor);
+                */
 
             }
 
@@ -198,5 +212,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    //Data sent from SendActivity
+    private BroadcastReceiver onSendActivityResult = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            Log.d(TAG, "Received SendActivity data");
+            finish();
+            startActivity(getIntent());
+
+        }
+    };
 
 }

@@ -129,7 +129,7 @@ public class NotificationService extends Service {
         //Builds notification
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_twitter_bird_white_24dp)
+                        .setSmallIcon(R.drawable.gasnotification)
                         .setContentTitle(msg + " just farted in your general direction")
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText("Click to open app!"));

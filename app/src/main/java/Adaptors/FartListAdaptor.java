@@ -1,6 +1,8 @@
 package Adaptors;
 
 import android.content.Context;
+import android.media.MediaPlayer;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import com.example.anders.hapticgass.R;
+import com.example.anders.hapticgass.SendActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -113,10 +116,15 @@ public class FartListAdaptor extends BaseAdapter {
             //Play button with onClick listner
             ImageButton play = (ImageButton) listview.findViewById(R.id.imageButton);
             final View finalListview = listview;
+
+            //Creates mediaplayer to play sound
+            final MediaPlayer mp = MediaPlayer.create(context, R.raw.fart);
+
             play.setOnClickListener(new View.OnClickListener() {
                 final Fart fart = f;
                 @Override
                 public void onClick(View view) {
+                    mp.start();
                     DatabaseReference seenFart;
                     //Sets seen to true and changes the background color
                     if (!fart.seen){

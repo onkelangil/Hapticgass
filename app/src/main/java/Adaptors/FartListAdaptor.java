@@ -2,6 +2,7 @@ package Adaptors;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,8 @@ public class FartListAdaptor extends BaseAdapter {
     private FirebaseAuth auth;
     private String senderUsername;
     private Boolean isRecevied;
+    private Vibrator mVibrator;
+    private MediaPlayer mp;
 
     private final static String TAG = "adaptor class";
 
@@ -46,6 +49,12 @@ public class FartListAdaptor extends BaseAdapter {
         this.fartList = fartList;
         reference = FirebaseDatabase.getInstance().getReference("userlist");
         auth = FirebaseAuth.getInstance();
+
+        //Creates mediaplayer to play sound
+        mp = MediaPlayer.create(context, R.raw.fart);
+
+        // Get instance of Vibrator from current Context
+        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 
     }
 
@@ -117,14 +126,12 @@ public class FartListAdaptor extends BaseAdapter {
             ImageButton play = (ImageButton) listview.findViewById(R.id.imageButton);
             final View finalListview = listview;
 
-            //Creates mediaplayer to play sound
-            final MediaPlayer mp = MediaPlayer.create(context, R.raw.fart);
-
             play.setOnClickListener(new View.OnClickListener() {
                 final Fart fart = f;
                 @Override
                 public void onClick(View view) {
                     mp.start();
+                    mVibrator.vibrate(300);
                     DatabaseReference seenFart;
                     //Sets seen to true and changes the background color
                     if (!fart.seen){

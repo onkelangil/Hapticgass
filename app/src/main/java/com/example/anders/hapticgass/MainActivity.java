@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     LOGIN_RESULT_CODE);
         }
         farts = new ArrayList<>();
-
+        getUserList();
         //Broadcast Receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(onSendActivityResult, new IntentFilter(BROADCAST_RESULT));
     }
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        getUserList();
+        //getUserList();
     }
 
     //Create menu bar to Log out
@@ -188,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(getIntent());
                     }
                 }
-
                 adaptor = new FartListAdaptor(MainActivity.this, farts);
                 friendList.setAdapter(adaptor);
 

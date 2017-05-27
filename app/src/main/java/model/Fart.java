@@ -14,7 +14,7 @@ public class Fart {
     public Fart(String receiver, String seen, String sender, String id){
         this.receiver = receiver;
         this.seen = Boolean.parseBoolean(seen);
-        this.sender =sender;
+        this.sender = sender;
         this.id = id;
     }
     public String getId(){

@@ -169,33 +169,25 @@ public class MainActivity extends AppCompatActivity {
                 Fart fart = dataSnapshot.getValue(Fart.class);
                 DatabaseReference ref = dataSnapshot.getRef();
                 fart.id = ref.getKey();
-                farts.add(fart);
+
+                //add fart to list so only the correct receiver gets the fart
+                if (currentUser != null) {
+                    if (fart.receiver != null) {
+                        if (fart.receiver.equals(currentUser.getUid())) {
+                            farts.add(fart);
+                        }
+                    }else {
+                        //Restarts application
+                        finish();
+                        startActivity(getIntent());
+                    }
+
+                }
                 adaptor = new FartListAdaptor(MainActivity.this, farts);
                 friendList.setAdapter(adaptor);
             }
-            //When child is changed the adaptor and UI are updated
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                /*
-                Log.d(TAG, "onChildChanged:  " + s);
-                Fart fart = new Fart();
-                fart.id = s;
-                fart.seen = Boolean.parseBoolean(dataSnapshot.child("seen").getValue() + "");
-                fart.receiver = dataSnapshot.child("receiver").getValue() + "";
-                fart.sender = dataSnapshot.child("sender").getValue() + "";
-
-                Log.d(TAG, fart.id + " - " + fart.receiver + " - " + fart.sender);
-
-                for (int i = 0; i < farts.size(); i++){
-                    if (s.equals(farts.get(i).id)){
-                        farts.remove(i);
-                        farts.add(fart);
-                    }
-                }
-                farts.add(fart);
-                adaptor = new FartListAdaptor(MainActivity.this, farts);
-                friendList.setAdapter(adaptor);
-                */
 
             }
 
@@ -221,7 +213,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            Log.d(TAG, "Received SendActivity data");
             finish();
             startActivity(getIntent());
 

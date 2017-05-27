@@ -1,7 +1,6 @@
 package Adaptors;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import com.example.anders.hapticgass.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,18 +29,13 @@ public class FartListAdaptor extends BaseAdapter {
     private Context context;
     private Fart f;
     private DatabaseReference reference;
-    private FirebaseAuth auth;
     private String senderUsername;
-
-    private final static String TAG = "adaptor class";
 
     public FartListAdaptor(Context context, ArrayList<Fart> fartList){
 
         this.context = context;
         this.fartList = fartList;
         reference = FirebaseDatabase.getInstance().getReference("userlist");
-        auth = FirebaseAuth.getInstance();
-
     }
 
     @Override
@@ -87,37 +80,31 @@ public class FartListAdaptor extends BaseAdapter {
             }
         });
 
-        //gets the fart list and
+        //gets the fart list and update the listview
         if(fartList != null && fartList.size() > i) {
             f = fartList.get(i);
             final TextView username = (TextView) listview.findViewById(R.id.userNameTV);
 
-            if (auth.getCurrentUser() != null) {
-                if (f.sender.equals(auth.getCurrentUser().getUid())) {
-
-                    Log.d(TAG, "getView: " + f.sender.equals(auth.getCurrentUser().getUid()));
-                }
-            }
             //Put the sender name on the list view
             reference.child(f.sender).child("username").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    senderUsername = dataSnapshot.getValue() + "";
-                    username.setText(senderUsername);
+                        senderUsername = dataSnapshot.getValue() + "";
+                        username.setText(senderUsername);
                 }
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-
                 }
             });
-            //Sets colors on the views
+
+            //Sets colors on the listview
             if (f.seen){
                 listview.setBackgroundColor(0xffe4e4e4);
             }else listview.setBackgroundColor(0xff6eebac);
 
             //Play button
             ImageButton play = (ImageButton) listview.findViewById(R.id.imageButton);
-            final View finalListview = listview;
+
             play.setOnClickListener(new View.OnClickListener() {
                 final Fart fart = f;
                 @Override
@@ -126,7 +113,6 @@ public class FartListAdaptor extends BaseAdapter {
                     if (!fart.seen){
                         seenFart = FirebaseDatabase.getInstance().getReference("farts");
                         seenFart.child(fart.id).child("seen").setValue(true);
-                        //finalListview.setBackgroundColor(0xffe4e4e4);
                     }
 
                 }

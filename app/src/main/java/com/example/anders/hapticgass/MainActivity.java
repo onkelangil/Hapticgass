@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
                     LOGIN_RESULT_CODE);
         }
         farts = new ArrayList<>();
-        getUserList();
 
         //Broadcast Receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(onSendActivityResult, new IntentFilter(BROADCAST_RESULT));
@@ -91,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        createNewUser();
+        getUserList();
     }
 
     //Create menu bar to Log out
@@ -144,10 +143,10 @@ public class MainActivity extends AppCompatActivity {
     private void createNewUser() {
         reference = database.getReference("userlist");
 
-        //Checks if user does not exist in the database
         reference.child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //Checks if user does not exist in the database
                 if (!dataSnapshot.exists()){
                     String uid = auth.getCurrentUser().getUid();
 

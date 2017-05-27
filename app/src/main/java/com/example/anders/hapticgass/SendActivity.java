@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adaptors.FriendListAdaptor;
+import model.Fart;
 import model.User;
 
 public class SendActivity extends AppCompatActivity {
@@ -85,9 +86,16 @@ public class SendActivity extends AppCompatActivity {
         String key = referenceFart.push().getKey();
 
         //Insert sender
-        referenceFart.child(key).child("sender").setValue(sID);
-        referenceFart.child(key).child("receiver").setValue(rID);
-        referenceFart.child(key).child("seen").setValue(false);
+        Fart f = new Fart();
+        f.receiver = rID;
+        f.sender = sID;
+        f.seen = false;
+
+        referenceFart.child(key).setValue(f);
+
+        //referenceFart.child(key).child("sender").setValue(sID);
+        //referenceFart.child(key).child("receiver").setValue(rID);
+        //referenceFart.child(key).child("seen").setValue(false);
     }
 
     public void getUserList() {

@@ -65,6 +65,7 @@ public class NotificationService extends Service {
                     //Get ID from sender
                     String senderID = dataSnapshot.child("sender").getValue() + "";
 
+                    //Gets the name of the sender from the ID
                     database.getReference("userlist").child(senderID).child("username").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
@@ -99,7 +100,6 @@ public class NotificationService extends Service {
 
             }
         });
-
         return START_STICKY;
     }
 

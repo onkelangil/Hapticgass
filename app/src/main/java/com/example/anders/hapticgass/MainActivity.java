@@ -172,29 +172,34 @@ public class MainActivity extends AppCompatActivity {
 
     //Retrieves the user list from the database
     public void getUserList() {
+        //Get a reference to the farts table
         reference = database.getReference("farts");
+
+        //Listen for changes on the farts table
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                //Save the fart added
                 Fart fart = dataSnapshot.getValue(Fart.class);
+
+                //Get the unique key of the fart added
                 DatabaseReference ref = dataSnapshot.getRef();
                 fart.id = ref.getKey();
 
-                //The fart is only added, to the list, if it is the correct receiver of the fart
                 if (currentUser != null) {
                     if (fart.receiver != null) {
-
+                        //The fart is only added to the list - if currentUser is the correct receiver of the fart
                         if (fart.receiver.equals(currentUser.getUid())) {
+                            //Add fart to list
                             farts.add(fart);
-
                         }
                     }else {
-
                         //Restarts activity
                         finish();
                         startActivity(getIntent());
                     }
                 }
+                //Update the UI with a new adaptor
                 adaptor = new FartListAdaptor(MainActivity.this, farts);
                 friendList.setAdapter(adaptor);
 

@@ -101,15 +101,20 @@ public class SendActivity extends AppCompatActivity {
         //referenceFart.child(key).child("seen").setValue(false);
     }
 
+    //Retrieves the user list from the database
     public void getUserList() {
+        //Creates a listener on the user list table
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                //If a user is added save the user
                 User user = dataSnapshot.getValue(User.class);
 
+                //Get the unique key of the user
                 DatabaseReference ref = dataSnapshot.getRef();
-
                 user.uid = ref.getKey();
+
+                //Add user to list and update the UI with updated adaptor
                 friends.add(user);
                 adaptor = new FriendListAdaptor(SendActivity.this, friends);
                 friendList.setAdapter(adaptor);

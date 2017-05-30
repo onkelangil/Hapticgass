@@ -122,7 +122,7 @@ public class FartListAdaptor extends BaseAdapter {
                 listview.setBackgroundColor(0xffffffff);
             }else listview.setBackgroundColor(0xff6eebac);
 
-            //Play button with onClick listner
+            //Play button with onClick listener
             ImageButton play = (ImageButton) listview.findViewById(R.id.imageButton);
             final View finalListview = listview;
 

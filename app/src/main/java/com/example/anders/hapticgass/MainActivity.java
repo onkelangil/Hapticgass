@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
             startNotificationService();
         }
         else {
+            //user is not signed in
             startActivityForResult(AuthUI.getInstance()
                             .createSignInIntentBuilder()
                             .setProviders(AuthUI.FACEBOOK_PROVIDER).build(),
@@ -123,8 +124,13 @@ public class MainActivity extends AppCompatActivity {
                 //User signed in through FB
                 currentUser = auth.getCurrentUser();
 
+                //Add user, but checks if he/she is already in DB
                 createNewUser();
 
+                //Update UI to get received farts
+                getUserList();
+
+                //Start notification service
                 startNotificationService();
             }else {
                 //Login failed
@@ -153,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
                     //The user is put into the database
                     reference.child(uid).child("username").setValue(currentUser.getDisplayName());
                     reference.child(uid).child("email").setValue(currentUser.getEmail());
+
                 }
             }
 
